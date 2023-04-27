@@ -27,14 +27,10 @@ while getopts "yw:" opt; do
   esac
 done
 
-echo "Using ${do_update} welcome message."
-
 # Check if confirmation is needed
 if $do_update; then
   confirm_needed=false
 fi
-
-echo "Using ${confirm_needed} welcome message."
 
 # Prompt for confirmation if needed
 if $confirm_needed; then
@@ -130,6 +126,8 @@ fi
 
 
 ## Run tests
+echo -e "\n==== Run tests ===="
+
 if ! sudo ufw status | grep "Status: active"; then
     echo "UFW firewall is not active!"
     exit 1
