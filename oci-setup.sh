@@ -2,13 +2,27 @@
 
 if ((${EUID:-0} || "$(id -u)")); then
     echo Please run this script as root or using sudo. Script execution aborted..
-    exit 0
+    exit 1
 fi
 
-read -p "This script will update and configure your instance. Do you wish to proceed? (y/n) " confirm
-if [ "$confirm" != "y" ]; then
+while getopts ":y:pt" opt; do
+  case ${opt} in
+    y ) answer=$OPTARG;;
+    p ) welcome_choice="p";;
+    t ) welcome_choice="t";;
+    \? ) echo "Invalid option: -$OPTARG" 1>&2
+         exit 1;;
+    : ) echo "Option -$OPTARG requires an argument." 1>&2
+         exit 1;;
+  esac
+done
+
+if [ "$answer" != "y" ]; then
+  read -p "This script will update and configure your instance. Do you wish to proceed? (y/n) " confirm
+  if [ "$confirm" != "y" ]; then
     echo "Script execution aborted."
     exit 0
+  fi
 fi
 
 ## Update and upgrade
@@ -64,7 +78,11 @@ sudo dpkg-reconfigure -f noninteractive unattended-upgrades
 sudo sed -i 's/^/#/' /etc/update-motd.d/10-help-text
 
 ## Add custom message
-read -p "Do you want to use the production or test custom welcome message? (p/t) " welcome_choice
+
+if [ "$welcome_choice" != "p" ] && [ "$welcome_choice" != "t" ]; then
+    read -p "Do you want to use the production or test custom welcome message? (p/t) " welcome_choice
+fi
+
 if [ "$welcome_choice" == "p" ]; then
     cat << EOF > /etc/update-motd.d/99-custom-welcome
 #!/bin/sh

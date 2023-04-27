@@ -9,5 +9,4 @@ jobs:
     - name: Test script
       run: |
         chmod +x oci-setup.sh
-        ./oci-setup.sh
-        
+        sudo ./oci-setup.sh
