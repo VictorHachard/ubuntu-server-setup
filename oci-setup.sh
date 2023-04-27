@@ -1,35 +1,54 @@
 #!/bin/bash
 
 if ((${EUID:-0} || "$(id -u)")); then
-    echo Please run this script as root or using sudo. Script execution aborted..
+    echo Please run this script as root or using sudo. Script execution aborted.
     exit 1
 fi
 
-while getopts ":y:pt" opt; do
-  case ${opt} in
-    y ) answer=$OPTARG;;
-    p ) welcome_choice="p";;
-    t ) welcome_choice="t";;
-    \? ) echo "Invalid option: -$OPTARG" 1>&2
-         exit 1;;
-    : ) echo "Option -$OPTARG requires an argument." 1>&2
-         exit 1;;
+# Set default values for options and variables
+do_update=false
+welcome_choice=""
+confirm_needed=true
+
+# Parse command-line options
+while getopts "yw:" opt; do
+  case "${opt}" in
+    y)
+      do_update=true
+      ;;
+    w)
+      if [[ "${OPTARG}" == "p" || "${OPTARG}" == "t" ]]; then
+        welcome_choice="${OPTARG}"
+      else
+        echo "Invalid option argument for -w: ${OPTARG}" >&2
+        exit 1
+      fi
+      ;;
   esac
 done
 
-if [ "$answer" != "y" ]; then
+echo "Using ${do_update} welcome message."
+
+# Check if confirmation is needed
+if $do_update; then
+  confirm_needed=false
+fi
+
+echo "Using ${confirm_needed} welcome message."
+
+# Prompt for confirmation if needed
+if $confirm_needed; then
   read -p "This script will update and configure your instance. Do you wish to proceed? (y/n) " confirm
   if [ "$confirm" != "y" ]; then
     echo "Script execution aborted."
-    exit 0
+    exit 1
   fi
 fi
 
 ## Update and upgrade
 sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 
-## Remove iptables and install ufw
-sudo systemctl disable iptables && sudo apt-get remove iptables -y
+## Install ufw
 sudo apt install ufw -y
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
@@ -79,8 +98,8 @@ sudo sed -i 's/^/#/' /etc/update-motd.d/10-help-text
 
 ## Add custom message
 
-if [ "$welcome_choice" != "p" ] && [ "$welcome_choice" != "t" ]; then
-    read -p "Do you want to use the production or test custom welcome message? (p/t) " welcome_choice
+if [ -z "$welcome_choice" ]; then
+  read -p "Do you want to use the production or test custom welcome message? (p/t) " welcome_choice
 fi
 
 if [ "$welcome_choice" == "p" ]; then
