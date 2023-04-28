@@ -5,12 +5,13 @@
 This script automates the configuration of an OCI instance with common settings for security and convenience, including:
 
 - Updating and upgrading the system
-- Installing ufw
+- Installing and configuring ufw (allow SSH (2233), HTTP, HTTPS)
 - Setting the timezone (Brussel)
-- Installing and configuring Nginx
-- Increasing SSH timeout
+- Installing and configuring Nginx (default name of the host)
+- Increasing SSH timeout and update the port to 2233
 - Configuring unattended upgrades (activate distro update)
-- Updating the welcome message
+- Updating the welcome message (production, certification, test)
+- Create missing .ssh folder and authorized_keys file for system user (between 1000 and 1100, excluding nobody)
 
 ### Usage
 
@@ -32,7 +33,11 @@ This script automates the configuration of an OCI instance with common settings 
    sudo ./oci-instance-configuration.sh
    ```
 
-During the script execution, you will be prompted for confirmation before certain steps, and you will have the option to choose between a production or a test custom welcome message.
+   ```
+   sudo ./oci-instance-configuration.sh -y -p <p/c/t>
+   ```
+
+During the script execution, you will be prompted for confirmation before certain steps, and you will have the option to choose between a production, a certification or a test custom welcome message.
 
 One line solution:
 
