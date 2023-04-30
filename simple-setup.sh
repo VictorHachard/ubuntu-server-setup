@@ -50,31 +50,8 @@ sudo timedatectl set-timezone Europe/Brussels
 ## Add Nginx
 sudo apt-get install nginx -y && sudo systemctl enable nginx.service --now
 
-cat <<EOF > /etc/nginx/sites-available/default
-server {
-    listen 80;
-    listen [::]:80;
-
-    server_name _;
-
-    location / {
-        default_type text/html;
-        return 200 "<!DOCTYPE html><h2>$(hostname)</h2>\n";
-    }
-}
-EOF
-
-sudo nginx -s reload
-
 # Auto upgrade system
 sudo apt install unattended-upgrades -y
-
-sudo sed -i 's#//\s*"${distro_id}:${distro_codename}-updates";#        "${distro_id}:${distro_codename}-updates";#g' /etc/apt/apt.conf.d/50unattended-upgrades
-sudo sed -i 's#//Unattended-Upgrade::Automatic-Reboot "false";#Unattended-Upgrade::Automatic-Reboot "true";#g' /etc/apt/apt.conf.d/50unattended-upgrades
-sudo sed -i 's#//Unattended-Upgrade::Automatic-Reboot-Time "02:00";#Unattended-Upgrade::Automatic-Reboot-Time "02:00";#g' /etc/apt/apt.conf.d/50unattended-upgrades
-sudo sed -i 's#//Unattended-Upgrade::Remove-Unused-Dependencies "false";#Unattended-Upgrade::Remove-Unused-Dependencies "true";#g' /etc/apt/apt.conf.d/50unattended-upgrades
-sudo sed -i 's#//Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";#Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";#g' /etc/apt/apt.conf.d/50unattended-upgrades
-sudo sed -i 's#//Unattended-Upgrade::Remove-New-Unused-Dependencies "true";#Unattended-Upgrade::Remove-New-Unused-Dependencies "true";#g' /etc/apt/apt.conf.d/50unattended-upgrades
 
 sudo dpkg-reconfigure -f noninteractive unattended-upgrades
 
@@ -160,25 +137,10 @@ sudo sed -i "s/#Port 22/Port 2233/g" /etc/ssh/sshd_config
 
 sudo systemctl reload sshd
 
-## Install ufw
-sudo apt install ufw -y
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow 2233
-sudo ufw allow http
-sudo ufw allow https
-
-sudo ufw --force enable
-
 ## Run tests
 echo -e "\n==== Run tests ===="
 
 error=false
-
-if ! sudo ufw status | grep "Status: active"; then
-    echo "UFW firewall is not active!"
-    error=true
-fi
 
 if ! timedatectl | grep "Time zone: Europe/Brussels"; then
     echo "Timezone is not set correctly!"
@@ -187,11 +149,6 @@ fi
 
 if ! systemctl status nginx | grep "active (running)"; then
     echo "Nginx is not running!"
-    error=true
-fi
-
-if ! curl http://localhost | grep "<h2>"; then
-    echo "Nginx server is not responding!"
     error=true
 fi
 
@@ -210,11 +167,6 @@ fi
 timeout=$(sudo grep "^Port" /etc/ssh/sshd_config | awk '{print $2}')
 if [ "$timeout" != "2233" ]; then
     echo "SSH port is not set to 2233."
-    error=true
-fi
-
-if ! grep -q "APT::Periodic::Unattended-Upgrade" /etc/apt/apt.conf.d/20auto-upgrades; then
-    echo "Auto-upgrades are not enabled."
     error=true
 fi
 

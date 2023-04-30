@@ -9,21 +9,61 @@ This script automates the configuration of an OCI instance with common settings 
 - Setting the timezone (Brussel)
 - Installing and configuring Nginx (default name of the host)
 - Increasing SSH timeout and update the port to 2233
-- Configuring unattended upgrades (activate distro update)
+- Installing and activate unattended upgrades (activate: Distro-Update, Remove-Unused-Kernel-Packages, Remove-New-Unused-Dependencies, Remove-Unused-Dependencies, Automatic-Reboot, Automatic-Reboot-Time)
 - Updating the welcome message (production, certification, test)
 - Create missing .ssh folder and authorized_keys file for system user (between 1000 and 1100, excluding nobody)
 
-### Usage
+### One-line Commands
+
+One-line command for the latest release:
+
+```sh
+sudo su -c "bash <(wget -qO- https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/oci-setup.sh) -y -w p" root
+```
+
+One-line command for the latest version:
+
+```sh
+sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubuntu-server-setup/main/oci-setup.sh) -y -w p" root
+```
+
+## Simple Configuration Script
+
+This script automates the configuration of an OCI instance with common settings for security and convenience, including:
+
+- Updating and upgrading the system
+- Setting the timezone (Brussel)
+- Installing Nginx
+- Increasing SSH timeout and update the port to 2233
+- Installing and activate unattended upgrades
+- Updating the welcome message (production, certification, test)
+- Create missing .ssh folder and authorized_keys file for system user (between 1000 and 1100, excluding nobody)
+
+### One-line Commands
+
+One-line command for the latest release:
+
+```sh
+sudo su -c "bash <(wget -qO- https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/simple-setup.sh) -y -w p" root
+```
+
+One-line command for the latest version:
+
+```sh
+sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubuntu-server-setup/main/simple-setup.sh) -y -w p" root
+```
+
+## Usage
 
 1. Download the script:
 
    - Latest release:
       ```
-      wget https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/oci-setup.sh
+      wget https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/<script>.sh
       ```
    - Latest version:
       ```
-      wget https://raw.githubusercontent.com/VictorHachard/ubuntu-server-setup/main/oci-setup.sh
+      wget https://raw.githubusercontent.com/VictorHachard/ubuntu-server-setup/main/<script>.sh
       ```
 
 2. Make the script executable:
@@ -47,13 +87,13 @@ During the script execution, you will be prompted for confirmation before certai
 One-line solution for the latest release:
 
 ```sh
-sudo su -c "bash <(wget -qO- https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/oci-setup.sh) -y -w p" root
+sudo su -c "bash <(wget -qO- https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/<script>.sh) -y -w p" root
 ```
 
 One-line solution for the latest version:
 
 ```sh
-sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubuntu-server-setup/main/oci-setup.sh) -y -w p" root
+sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubuntu-server-setup/main/<script>.sh) -y -w p" root
 ```
 
 ## Disclaimer
