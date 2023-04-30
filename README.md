@@ -17,9 +17,14 @@ This script automates the configuration of an OCI instance with common settings 
 
 1. Download the script:
 
-   ```
-   wget https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/oci-setup.sh
-   ```
+   - Latest release:
+      ```
+      wget https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/oci-setup.sh
+      ```
+   - Latest version:
+      ```
+      wget https://raw.githubusercontent.com/VictorHachard/ubuntu-server-setup/main/oci-setup.sh
+      ```
 
 2. Make the script executable:
 
@@ -39,10 +44,16 @@ This script automates the configuration of an OCI instance with common settings 
 
 During the script execution, you will be prompted for confirmation before certain steps, and you will have the option to choose between a production, a certification or a test custom welcome message.
 
-One line solution:
+One-line solution for the latest release:
 
 ```sh
 sudo su -c "bash <(wget -qO- https://github.com/VictorHachard/ubuntu-server-setup/releases/latest/download/oci-setup.sh) -y -w p" root
+```
+
+One-line solution for the latest version:
+
+```sh
+sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubuntu-server-setup/main/oci-setup.sh) -y -w p" root
 ```
 
 ## Disclaimer
