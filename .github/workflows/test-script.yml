@@ -1,20 +1,20 @@
-name: Test OCI/Simple Setup Script
+name: Test OCI/Simple Setup Scripts
 
 on: [push]
 jobs:
-  test oci:
+  testoci:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Test script
+    - name: Test OCI Script
       run: |
         chmod +x oci-setup.sh
         sudo ./oci-setup.sh -y -w p
-  test simple:
+  testsimple:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Test script
+    - name: Test Simple Script
       run: |
         chmod +x simple-setup.sh
         sudo ./simple-setup.sh -y -w p
