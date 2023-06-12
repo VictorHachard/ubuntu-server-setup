@@ -47,8 +47,10 @@ sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 ## Set timezone
 sudo timedatectl set-timezone Europe/Brussels
 
-## Add Nginx
-sudo apt-get install nginx -y && sudo systemctl enable nginx.service --now
+## Add Nginx and remove old TLS
+sudo apt-get install nginx -y
+sudo sed -i "s/ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;/ssl_protocols TLSv1.2 TLSv1.3;/g" /etc/nginx/nginx.conf
+sudo systemctl enable nginx.service --now
 
 # Auto upgrade system
 sudo apt install unattended-upgrades -y
@@ -149,6 +151,16 @@ fi
 
 if ! systemctl status nginx | grep "active (running)"; then
     echo "Nginx is not running!"
+    error=true
+fi
+
+if [ ! grep -q "^TLSv1" /etc/nginx/nginx.conf ]; then
+    echo "TLSv1 is not removed."
+    error=true
+fi
+
+if ! grep -q "^TLSv1.1" /etc/nginx/nginx.conf; then
+    echo "TLSv1.1 is not removed."
     error=true
 fi
 

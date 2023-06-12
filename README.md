@@ -79,7 +79,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubu
    ```
 
    ```
-   sudo ./oci-instance-configuration.sh -y -p <p/c/t>
+   sudo ./oci-instance-configuration.sh -y -w <p/c/t>
    ```
 
 During the script execution, you will be prompted for confirmation before certain steps, and you will have the option to choose between a production, a certification or a test custom welcome message.
@@ -98,4 +98,4 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubu
 
 ## Disclaimer
 
-Use this script at your own risk. While it has been tested on Ubuntu and Oracle Linux, it may not work on other distributions or configurations. It is highly recommended to review and understand the script code before running it, and to take backups or snapshots of your instance before applying any changes.
+Use this script at your own risk. While it has been tested on Ubuntu 22.04 and Ubuntu 22.04 on an Oracle Instance (OCI), it may not work on other distributions or configurations. It is highly recommended to review and understand the script code before running it, and to take backups or snapshots of your instance before applying any changes.
