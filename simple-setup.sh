@@ -219,12 +219,12 @@ if ! systemctl status nginx | grep "active (running)"; then
     error=true
 fi
 
-if ! grep -q "^TLSv1" /etc/nginx/nginx.conf; then
+if grep -q "^TLSv1" /etc/nginx/nginx.conf; then
     echo "TLSv1 is not removed."
     error=true
 fi
 
-if ! grep -q "^TLSv1.1" /etc/nginx/nginx.conf; then
+if grep -q "^TLSv1.1" /etc/nginx/nginx.conf; then
     echo "TLSv1.1 is not removed."
     error=true
 fi
@@ -247,7 +247,7 @@ if [ "$timeout" != $ssh_port ]; then
     error=true
 fi
 
-if [ ! -f /etc/update-motd.d/99-custom-welcome && "$welcome_choice" =~ ^(p|c|d|)$ ]; then
+if [ ! -f /etc/update-motd.d/99-custom-welcome ] && [[ "$welcome_choice" == [pcd] ]]; then
     echo "Custom welcome message is not added."
     error=true
 fi

@@ -42,10 +42,10 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubu
 This script automates the configuration of an OCI instance with common settings for security and convenience, including:
 
 - Updating and upgrading the system
-- Installing and configuring ufw (allow SSH (2233), HTTP, HTTPS)
+- Installing and configuring ufw (allow SSH, HTTP, HTTPS)
 - Setting the timezone (Brussel)
 - Installing and configuring Nginx (default name of the host and remove old TLS version)
-- Increasing SSH timeout and update the default port to 2233
+- Increasing SSH timeout and update (default port to 2233)
 - Installing and activate unattended upgrades (activate: Distro-Update, Remove-Unused-Kernel-Packages, Remove-New-Unused-Dependencies, Remove-Unused-Dependencies, Automatic-Reboot, Automatic-Reboot-Time)
 - Updating the welcome message (production, certification, test)
 - Create missing .ssh folder and authorized_keys file for system user (between 1000 and 1100, excluding nobody)
@@ -53,7 +53,7 @@ This script automates the configuration of an OCI instance with common settings 
 ### Usage:
 
 ```sh
-.//oci-setup.sh [OPTIONS]
+./oci-setup.sh [OPTIONS]
 ```
 
 Options:
@@ -96,7 +96,7 @@ This script automates the configuration of an OCI instance with common settings 
 - Updating and upgrading the system
 - Setting the timezone (Brussel)
 - Installing Nginx (remove old TLS version)
-- Increasing SSH timeout and update the default port to 2233
+- Increasing SSH timeout and update (default port to 2233)
 - Installing and activate unattended upgrades
 - Updating the welcome message (production, certification, test)
 - Create missing .ssh folder and authorized_keys file for system user (between 1000 and 1100, excluding nobody)
