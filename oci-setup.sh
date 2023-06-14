@@ -64,8 +64,10 @@ fi
 
 ## Update and upgrade
 sudo sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
-sudo apt update && sudo apt upgrade -no-restart-on-upgrade -y && sudo apt autoremove -y
+sudo sed -i "s/\$nrconf{restart} = 'i';/\$nrconf{restart} = 'a';/g" /etc/needrestart/needrestart.conf
+sudo apt update && sudo apt upgrade -q -y && sudo apt autoremove -y
 sudo sed -i "s/\$nrconf{kernelhints} = -1;/#\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
+sudo sed -i "s/\$nrconf{restart} = 'a';/\$nrconf{restart} = 'i';/g" /etc/needrestart/needrestart.conf
 
 ## Set timezone
 sudo timedatectl set-timezone Europe/Brussels
@@ -227,7 +229,7 @@ if ! $quiet; then
     done
 fi
 
-if $install_fail2ban; then
+if [ "$install_fail2ban" == "y" ]; then
     sudo apt-get install fail2ban -y
     sudo systemctl enable fail2ban --now
 fi
