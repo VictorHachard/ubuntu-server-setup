@@ -9,7 +9,7 @@ jobs:
     - name: Test OCI Script
       run: |
         chmod +x oci-setup.sh
-        sudo ./oci-setup.sh -y -w p
+        sudo ./oci-setup.sh -y -w p -m -q
   testsimple:
     runs-on: ubuntu-latest
     steps:
@@ -17,4 +17,4 @@ jobs:
     - name: Test Simple Script
       run: |
         chmod +x simple-setup.sh
-        sudo ./simple-setup.sh -y -w p
+        sudo ./simple-setup.sh -y -w p -m -q
