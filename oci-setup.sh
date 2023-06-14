@@ -62,12 +62,11 @@ if $confirm_needed; then
   fi
 fi
 
-## Update and upgrade
 sudo sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
 sudo sed -i "s/\$nrconf{restart} = 'i';/\$nrconf{restart} = 'a';/g" /etc/needrestart/needrestart.conf
+
+## Update and upgrade
 sudo apt update && sudo apt upgrade -q -y && sudo apt autoremove -y
-sudo sed -i "s/\$nrconf{kernelhints} = -1;/#\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
-sudo sed -i "s/\$nrconf{restart} = 'a';/\$nrconf{restart} = 'i';/g" /etc/needrestart/needrestart.conf
 
 ## Set timezone
 sudo timedatectl set-timezone Europe/Brussels
@@ -241,6 +240,9 @@ sudo sed -i "s/#Port 22/Port $ssh_port/g" /etc/ssh/sshd_config
 
 sudo systemctl reload sshd
 
+sudo sed -i "s/\$nrconf{kernelhints} = -1;/#\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
+sudo sed -i "s/\$nrconf{restart} = 'a';/\$nrconf{restart} = 'i';/g" /etc/needrestart/needrestart.conf
+
 ## Run tests
 echo -e "\n==== Run tests ===="
 
@@ -315,7 +317,7 @@ sudo rm -rf /var/lib/apt/lists/*
 
 logger "Server configuration completed"
 echo "Server configuration completed"
-echo "Restarting server in 2 minutes" >> /var/log/restart_server.log
-echo "Restarting server in 2 minutes"
-sleep 120
+echo "Restarting server in 1 minutes" >> /var/log/restart_server.log
+echo "Restarting server in 1 minutes"
+sleep 60
 sudo shutdown -r now
