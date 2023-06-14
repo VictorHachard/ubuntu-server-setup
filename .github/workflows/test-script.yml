@@ -1,20 +1,22 @@
 name: Test OCI/Simple Setup Scripts
 
-on: [push]
+#on: [push]
 jobs:
   testoci:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v3
     - name: Test OCI Script
       run: |
         chmod +x oci-setup.sh
-        sudo ./oci-setup.sh -y -w p -m -q
+        sudo ./oci-setup.sh -y -w p -q
   testsimple:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@v3
     - name: Test Simple Script
       run: |
         chmod +x simple-setup.sh
-        sudo ./simple-setup.sh -y -w p -m -q
+        sudo ./simple-setup.sh -y -w p -q

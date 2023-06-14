@@ -63,7 +63,9 @@ if $confirm_needed; then
 fi
 
 ## Update and upgrade
-sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+sudo sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
+sudo apt update && sudo apt upgrade -no-restart-on-upgrade -y && sudo apt autoremove -y
+sudo sed -i "s/\$nrconf{kernelhints} = -1;/#\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
 
 ## Set timezone
 sudo timedatectl set-timezone Europe/Brussels
