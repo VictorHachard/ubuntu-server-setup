@@ -91,7 +91,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/VictorHachard/ubu
 
 ## Simple Configuration Script
 
-This script automates the configuration of an OCI instance with common settings for security and convenience, including:
+This script automates the configuration of an instance with common settings for security and convenience, including:
 
 - Updating and upgrading the system
 - Setting the timezone (Brussel)

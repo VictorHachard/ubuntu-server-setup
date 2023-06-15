@@ -205,7 +205,7 @@ if ! $quiet; then
         if [[ ! "$ssh_port" =~ ^[0-9]+$ ]]; then
             echo "Invalid input. Please enter a valid SSH port number."
         elif [[ -z "$ssh_port" ]]; then
-            breakd create the .ssh direc
+            breakd create the .ssh directory
         fi
     done
 fi
