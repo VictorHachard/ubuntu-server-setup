@@ -62,16 +62,17 @@ if $confirm_needed; then
   fi
 fi
 
+# Remove needrestart
 sudo sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
 sudo sed -i "s/\$nrconf{restart} = 'i';/\$nrconf{restart} = 'a';/g" /etc/needrestart/needrestart.conf
 
-## Update and upgrade
+# Update and upgrade
 sudo apt update && sudo apt upgrade -q -y && sudo apt autoremove -y
 
-## Set timezone
+# Set timezone
 sudo timedatectl set-timezone Europe/Brussels
 
-## Add Nginx and remove old TLS
+# Add Nginx and remove old TLS
 sudo apt-get install nginx -y
 sudo sed -i "s/ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;/ssl_protocols TLSv1.2 TLSv1.3;/g" /etc/nginx/nginx.conf
 sudo systemctl enable nginx.service --now
@@ -240,6 +241,7 @@ sudo sed -i "s/#Port 22/Port $ssh_port/g" /etc/ssh/sshd_config
 
 sudo systemctl reload sshd
 
+# Add needrestart
 sudo sed -i "s/\$nrconf{kernelhints} = -1;/#\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
 sudo sed -i "s/\$nrconf{restart} = 'a';/\$nrconf{restart} = 'i';/g" /etc/needrestart/needrestart.conf
 
